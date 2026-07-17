@@ -12,4 +12,10 @@ public class AppDbContext : DbContext
     public DbSet<Player> Players { get; set; }
     public DbSet<Asset> Assets { get; set; }
     public DbSet<PlayerAsset> PlayerAssets { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<PlayerAsset>().HasNoKey();
+    }
 }
