@@ -1,8 +1,136 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BATTLEGAME - Admin Console</title>
+<link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark mb-4">
+  <div class="container">
+    <span class="navbar-brand mb-0 h1">🎮 BATTLEGAME Admin Console</span>
+  </div>
+</nav>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container pb-5">
+
+  <!-- API base URL configuration -->
+  <div class="card mb-4">
+    <div class="card-body d-flex align-items-center gap-2 flex-wrap">
+      <label for="apiBaseUrl" class="form-label mb-0 fw-semibold">API Base URL:</label>
+      <input type="text" id="apiBaseUrl" class="form-control" style="max-width: 320px;" value="/api" />
+      <span id="apiStatus" class="badge bg-secondary">chưa kiểm tra</span>
+      <button id="btnCheckApi" class="btn btn-sm btn-outline-secondary">Kiểm tra kết nối</button>
+    </div>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- Requirement 1: registerplayer -->
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-header bg-primary text-white">1. Register Player </div>
+        <div class="card-body">
+          <form id="formRegisterPlayer">
+            <div class="mb-2">
+              <label class="form-label">Player Name</label>
+              <input required class="form-control" name="playerName" placeholder="Player 1" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Full Name</label>
+              <input class="form-control" name="fullName" placeholder="Nguyen Van A" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Age</label>
+              <input class="form-control" name="age" placeholder="20" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Level</label>
+              <input type="number" class="form-control" name="level" value="1" min="0" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" name="email" placeholder="player1@mail.com" />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+          </form>
+          <div id="registerPlayerResult" class="small mt-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Requirement 2: createasset -->
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-header bg-success text-white">2. Create Asset </div>
+        <div class="card-body">
+          <form id="formCreateAsset">
+            <div class="mb-2">
+              <label class="form-label">Asset Name</label>
+              <input required class="form-control" name="assetName" placeholder="Hero 1" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Level Require</label>
+              <input type="number" class="form-control" name="levelRequire" value="1" min="0" />
+            </div>
+            <button type="submit" class="btn btn-success w-100">Create</button>
+          </form>
+          <div id="createAssetResult" class="small mt-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Utility: assignasset (needed to populate PlayerAsset data) -->
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-header bg-warning">Utility. Assign Asset to Player </div>
+        <div class="card-body">
+          <form id="formAssignAsset">
+            <div class="mb-2">
+              <label class="form-label">Player</label>
+              <select required class="form-select" name="playerId" id="selectPlayer"></select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Asset</label>
+              <select required class="form-select" name="assetId" id="selectAsset"></select>
+            </div>
+            <button type="submit" class="btn btn-warning w-100">Assign</button>
+          </form>
+          <div id="assignAssetResult" class="small mt-2"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Requirement 3 & 4: getassetsbyplayer report table -->
+  <div class="card mt-4">
+    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+      <span>3. Player Assets Report </span>
+      <button id="btnRefreshReport" class="btn btn-sm btn-light">🔄 Refresh</button>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>No</th>
+            <th>Player name</th>
+            <th>Level</th>
+            <th>Age</th>
+            <th>Asset name</th>
+          </tr>
+        </thead>
+        <tbody id="reportTableBody">
+          <tr><td colspan="5" class="text-center text-muted">Đang tải...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
+
+<script src="app.js"></script>
+</body>
+</html>
